@@ -1,30 +1,20 @@
-// models/Ingredient.model.ts
+import { Schema, Document, models, model } from "mongoose";
 
-import mongoose, { Schema, Document, Model } from "mongoose";
-
-export type IngredientType = "base" | "sauce" | "cheese" | "veggie";
-
+// 1. Define interface
 export interface IIngredient extends Document {
   name: string;
   stock: number;
-  type: IngredientType;
+  category: "base" | "sauce" | "cheese" | "veggie";
 }
 
-const IngredientSchema: Schema<IIngredient> = new Schema(
-  {
-    name: { type: String, required: true },
-    stock: { type: Number, required: true },
-    type: {
-      type: String,
-      enum: ["base", "sauce", "cheese", "veggie"],
-      required: true,
-    },
-  },
-  {
-    timestamps: true,
-  }
-);
+// 2. Define schema
+const IngredientSchema = new Schema<IIngredient>({
+  name: { type: String, required: true },
+  stock: { type: Number, required: true },
+  category: { type: String, required: true },
+});
 
-// Prevent model overwrite on hot reload
-export const Ingredient: Model<IIngredient> =
-  mongoose.models.Ingredient || mongoose.model<IIngredient>("Ingredient", IngredientSchema);
+// 3. Export model
+const Ingredient =
+  models.Ingredient || model<IIngredient>("Ingredient", IngredientSchema);
+export default Ingredient;

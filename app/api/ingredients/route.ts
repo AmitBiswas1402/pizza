@@ -11,13 +11,16 @@ export async function GET() {
     const grouped = {
       bases: ingredients.filter((i) => i.category === "base"),
       sauces: ingredients.filter((i) => i.category === "sauce"),
-      cheese: ingredients.filter((i) => i.category === "cheese"),
+      cheeses: ingredients.filter((i) => i.category === "cheese"),
       veggies: ingredients.filter((i) => i.category === "veggie"),
     };
 
-    return NextResponse.json(grouped, { status: 200 });
-  } catch (err) {
-    console.error("Error fetching ingredients:", err);
-    return NextResponse.json({ error: "Failed to fetch ingredients" }, { status: 500 });
+    return NextResponse.json(grouped);
+  } catch (error) {
+    console.error("Error fetching ingredients:", error);
+    return NextResponse.json(
+      { error: "Failed to fetch ingredients" },
+      { status: 500 }
+    );
   }
 }
