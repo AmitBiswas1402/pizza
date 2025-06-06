@@ -7,15 +7,17 @@ export async function GET() {
     await connectToDB();
 
     const ingredients = await Ingredient.find();
+    
+    console.log("Fetched ingredients from DB:", ingredients);
 
     const grouped = {
-      bases: ingredients.filter((i) => i.category === "base"),
-      sauces: ingredients.filter((i) => i.category === "sauce"),
-      cheeses: ingredients.filter((i) => i.category === "cheese"),
-      veggies: ingredients.filter((i) => i.category === "veggie"),
+      bases: ingredients.filter((i) => i.category === "base") || [],
+      sauces: ingredients.filter((i) => i.category === "sauce") || [],
+      cheeses: ingredients.filter((i) => i.category === "cheese") || [],
+      veggies: ingredients.filter((i) => i.category === "veggie") || [],
     };
 
-    return NextResponse.json(grouped);
+    return NextResponse.json(grouped, { status: 200 });
   } catch (error) {
     console.error("Error fetching ingredients:", error);
     return NextResponse.json(
