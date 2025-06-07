@@ -24,7 +24,7 @@ export default function PizzaBuilderPage() {
     axios.get("/api/ingredients").then((res) => {
       setBases(res.data.bases);
       setSauces(res.data.sauces);
-      setCheeses(res.data.cheese);
+      setCheeses(res.data.cheeses);
       setVeggies(res.data.veggies);
     });
   }, []);
