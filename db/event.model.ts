@@ -128,7 +128,7 @@ EventSchema.pre('save', function (next) {
     event.time = normalizeTime(event.time);
   }
 
-//   next();
+  // next();
 });
 
 // Helper function to generate URL-friendly slug
@@ -177,6 +177,9 @@ function normalizeTime(timeString: string): string {
   
   return `${hours.toString().padStart(2, '0')}:${minutes}`;
 }
+
+// Create unique index on slug for better performance
+EventSchema.index({ slug: 1 }, { unique: true });
 
 // Create compound index for common queries
 EventSchema.index({ date: 1, mode: 1 });
